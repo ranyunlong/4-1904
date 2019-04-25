@@ -80,6 +80,9 @@ git remote 删除添加仓库
 
 git pull <仓库名称> <分支名称>
 
+13. git fetch 下载分支
+
+git fetch <仓库名称> <分支名称>:<本地保存的分支名称>
 
 ## 远程仓库
 
@@ -87,3 +90,5 @@ git pull <仓库名称> <分支名称>
 https://github.com/
 2. GitLab
 需要自己的服务器搭建 公司搭建
+
+http://g.ranyunlong.com/users/sign_in
