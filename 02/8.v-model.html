@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            v-model 一般用于表单元素
+            双向绑定
+            我提供数据给他
+            他也可以提供数据给我
+            input output  = io
+
+            双向绑定 =  input output
+            单向绑定 = output
+            
+         -->
+         <ul>
+             <li v-for="item in messageList">
+                {{item}}
+             </li>
+         </ul>
+         <div>{{text}}</div>
+         <!-- <input type="text" v-model="text">  -->
+         <textarea  v-model="text"></textarea>
+         <button v-on:click="handlePublish">发布列表</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                messageList: [],
+                text: '12321'
+            },
+            methods: {
+                handlePublish() {
+
+                },
+                handleInput() {
+                    console.log(this.text)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

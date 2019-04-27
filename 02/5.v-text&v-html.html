@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            只有遇到变量中包含html字符串时才使用这两个指令
+            v-text 讲标签字符串按字符串显示
+            v-html 将标签字符串按标签去显示
+         -->
+        <div v-text="text"></div>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                text: '<button>按钮</button>'
+            }
+        })
+    </script>
+</body>
+</html>

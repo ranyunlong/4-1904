@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            v-on:click="test"
+            v-on:click="isShow = true"
+            v-on:click="click"
+
+            v-on指令可以使用@符号代替（冒号也不要了）
+            
+            内置的变量 $event 来传递事件对象
+            v-on:click="click(a, $event)"
+
+            // 从循环的数组里 同时取成员 和 下标
+            // 括号的第一个参数 是成员 第二个参数是下标 不管怎么命名
+            v-for="(item, index) in list"
+         -->
+         <!-- <div v-if="isShow">div的内容</div> -->
+        <!-- <button v-on:click="click">按钮</button> -->
+        <ul>
+            <li v-for="(item, index) in list">
+                {{item}}
+                <button @click="click(item, index, $event)">删除</button>
+                <button v-on:click="add(item, index, $event)">添加</button>
+                <button v-on:mouseover="add(item, index, $event)">添加</button>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // data 的成员和methods里的成员不能重复
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                isShow: false,
+                list: [
+                    '112312',
+                    '213213',
+                    '22222'
+                ]
+            },
+            methods: {   // 添加事件的处理函数
+                click(a, i, e) {
+                    // console.log(a, i, e)
+                    // console.log(this.list)
+                    // splice 从数组里取成员 被取出的成员会从原数组里移除 
+                    this.list.splice(i, 1)
+                    // console.log(this.list)
+                },
+                add(a, i, e) {
+                    console.log(e)
+                    // this.list.push(a)
+                    // 数组成员不能直接通过下标去添加删除成员 这样不会被模板响应
+                    // this.list[this.list.length] = '111'
+                    // console.log(this.list)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

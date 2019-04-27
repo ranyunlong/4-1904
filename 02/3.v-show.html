@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            可以使用简单的条件表达式
+            和boolean值
+            v-show="a === b"
+            v-show="a === 0 ? true : false"
+            v-show="true"
+            v-show="false"
+         -->
+        <button v-show="a === 0 ? true : false">按钮</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                isShow: false,
+                a: 1,
+                b: 0
+            }
+        })
+    </script>
+</body>
+</html>

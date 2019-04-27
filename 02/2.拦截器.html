@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="h1"></h1>
+
+    <script>
+        const obj = {
+            // name: '张三',
+            // age: 30
+            _name: '',
+            _age: 0,
+            get name() {
+                console.log('有人在获取数据')
+                return this._name
+            },
+            get age() {
+                return this._age
+            },
+
+            set name(val) {
+                console.log('有人在设置name数据', val)
+                document.getElementById('h1').innerHTML = val;
+                this._name = val;
+            },
+
+            set age(val) {
+                this._age = val
+            }
+        }
+
+        console.log(obj)
+    </script>
+</body>
+</html>

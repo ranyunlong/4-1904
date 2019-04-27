@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 这里也可以提供模板 
+            {{}} 插值表达式
+            指令：告诉模板做什么工作
+            不同的指令做不同的工作
+            vue自带的指令都是以v-开头的
+            v-for 循环指令 向html的属性一样写到标签上
+            v-for="声明一个新变量用于存储数组的成员 in 数组"
+        -->
+        <h1>{{title}}</h1>
+        <p>{{name}}</p>
+
+        <button v-for="item in btnList">{{item}}</button>
+    </div>
+    <script>
+        // new Vue 一个vue实例
+        const vm = new Vue({
+            // el: document.getElementById('app'),  //绑定到页面的真实dom的 可以使用选择器 也可以使用元素对象
+            el: '#app',
+            data: {         // model 数据提供数据
+                title: 'vue111',
+                name: '张三11',
+                btnList: [
+                    '按钮a',
+                    '按钮c',
+                    '小按钮',
+                    '小按钮'
+                ]
+            },
+            // template: ``,   // 提供模板
+        })
+    </script>
+</body>
+</html>
+
+

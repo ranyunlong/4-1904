@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            可以使用简单的条件表达式
+            和boolean值
+            v-if 和 v-show的区别 一个是使用display 一个是直接从dom移除元素
+            v-if="a === b"
+            v-if="a === 0 ? true : false"
+            v-if="true"
+            v-if="false"
+         -->
+        <button v-if="a === 0">按钮1</button>
+        <button v-else-if="a === 1">按钮2</button>
+        <button v-else-if="a === 2">按钮3</button>
+        <button v-else>按钮4</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                isShow: false,
+                a: 1,
+                b: 0
+            }
+        })
+    </script>
+</body>
+</html>

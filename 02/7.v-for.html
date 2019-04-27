@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            v-for=""
+            v-for=""
+            循环对象
+             下标是对象的key
+
+            循环数组
+             下标是数组的index
+
+            循环次数
+             循环的对象就是数字
+         -->
+
+         <!-- <div>
+             <span v-for="(item, index) in student"> {{index}} {{item}}</span>
+         </div> -->
+<!-- 
+         <ul>
+             <li v-for="(item, index) in list">
+                <span v-for="(val, key) in item">
+                    {{key}} :{{val}}    
+                </span>
+             </li>
+         </ul> -->
+
+         <!-- 
+             使用v-for 循环99乘法表
+          -->
+         <!-- <ul>
+             <li v-for="(item, index) in 20">{{index}}</li>
+         </ul> -->
+
+         <ul>
+             <li v-for="item in list">
+                <div>   
+                    name: {{item.name}}
+                    age: {{item.age}}
+                </div>
+                <ul>
+                    <li v-for="child in item.children">
+                        <div> 
+                            name: {{child.name}}
+                            age: {{child.age}}
+                        </div>
+                    </li>
+                </ul>
+             </li>
+         </ul>
+    </div>
+
+    <script>
+        // data 的成员和methods里的成员不能重复
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                isShow: false,
+                list: [
+                    {
+                        name: '张三',
+                        age: 20,
+                        children: [
+                            {
+                                name: '小明',
+                                age:1
+                            },
+                            {
+                                name: '小芳',
+                                age: 2
+                            }
+                        ]
+                    },
+                    {
+                        name: '李四',
+                        age: 20
+                    },
+                    {
+                        name: '老王',
+                        age: 30,
+                        children: [
+                            {
+                                name: '晓东',
+                                age: 5
+                            }
+                        ]
+                    }
+                ],
+                student: {
+                    name: '张三',
+                    age: 20
+                }
+            },
+            methods: {   // 添加事件的处理函数
+                
+            },
+        })
+    </script>
+</body>
+</html>
