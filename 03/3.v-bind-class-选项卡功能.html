@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./style/index.css">
+</head>
+<body>
+    <div id="app">
+        <div class="tab">
+            <div class="header">
+                <div 
+                    v-bind:class="['item', {
+                        active: showIndex === index
+                    }]" 
+                    v-for="(item, index) in list"
+                    @click="selectItem(index)"
+                >
+                    {{item.title}}
+                </div>
+            </div>
+            <div class="content">
+                <div
+                    class="item"
+                    v-for="(item, index) in list"
+                    v-if="showIndex === index"
+                >
+                    {{item.content}}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                showIndex: 0,
+                list: [
+                    {
+                        title: '选项卡1',
+                        content: '选项卡内容1'
+                    },
+                    {
+                        title: '选项卡2',
+                        content: '选项卡内容2'
+                    },
+                    {
+                        title: '选项卡3',
+                        content: '选项卡内容3'
+                    },
+                    {
+                        title: '选项卡4',
+                        content: '选项卡内容4'
+                    }
+                ]
+            },
+            methods: {
+                selectItem(i) {
+                    // console.log(i)
+                    this.showIndex = i
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            v-bind:class
+            v-bind的加强功能
+            v-bind:class="[]" 可以是数组
+            作为数组时 里面的成员可以是对象 可以是字符串 ['item', { key1: true },  { key2: true }]
+            v-bind:class="{key: boolean}" 可以是对象 如果 value 为true key就会被当做样式添加上
+            
+        -->
+        <div v-bind:class="['item', { key1: true },  { key2: true }]"></div>
+    </div>
+
+    <script>
+        
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              arr: ['a', 'c']
+            }
+        })
+    </script>
+</body>
+</html>

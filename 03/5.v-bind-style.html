@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+            v-bind 可以缩写为 `:` === v-bind:
+            v-on 开业缩写为  `@` === v-on:
+         -->
+        <input type="range" v-model="range" />
+        <div :style="[style, {
+            backgroundColor: `rgba(0,0,0, ${range / 100})`
+        }]">
+            23432432
+        </div>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                range: 0,
+                style: {
+                    color: 'red'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

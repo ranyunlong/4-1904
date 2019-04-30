@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./style/index.css">
+</head>
+<body>
+    <div id="app">
+        <!-- <ul>
+            <li v-for="item in list">
+                <h2>{{item.title}}</h2>
+                <span v-for="child in item.children">
+                   {{child.name}}: <input type="checkbox" v-bind:value="child.value" v-model="item.value" /> {{child.value}}
+                </span>
+            </li>
+        </ul> -->
+
+        <!-- <div class="tab">
+            <div class="header">
+                <div class="item" v-for="item in list1">
+                    {{item.title}}
+                    <input type="checkbox" v-model="item.checked">
+                </div>
+            </div>
+            <div class="content" v-show="item.checked" v-for="item in list1">
+                {{item.content}}
+            </div>
+        </div> -->
+
+        <!-- 男<input type="radio" value="a" v-model="value">
+        女<input type="radio" value="b" v-model="value">
+
+        {{value}} -->
+
+        <!-- <select v-model="select" multiple>
+            <option
+                v-for="(item, index) in list1"
+                :value="index"
+            >
+                {{item.title}}
+            </option>
+        </select> -->
+
+        <input
+            type="checkbox"
+            v-model="user.status"
+            true-value="0"
+            false-value="1"
+        />
+
+        {{user}}
+
+        <button
+            @click="send"
+        >
+        提交
+        </button>
+        
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                user: {
+                    name: '张三',
+                    age: 'lisi',
+                    status: 0
+                },
+                select: 2,
+                value: 'b',
+                list: [
+                    {
+                        title: '1. 下面那些是水果',
+                        value: [],
+                        children: [{
+                            name:'A',
+                            value: '苹果'
+                        },{
+                            name:'B',
+                            value: '梨子'
+                        }]
+                    },
+                    {
+                        title: '2. 下面那些是水果',
+                        value: [],
+                        children: [{
+                            name:'A',
+                            value: '苹果'
+                        },{
+                            name:'B',
+                            value: '梨子'
+                        }]
+                    }
+                ],
+                list1: [
+                    {
+                        title: '项目1',
+                        content: '内容1',
+                        checked: true
+                    },
+                    {
+                        title: '项目2',
+                        content: '内容2',
+                        checked: false
+                    },
+                    {
+                        title: '项目3',
+                        content: '内容3',
+                        checked: false
+                    },
+                    {
+                        title: '项目4',
+                        content: '内容5',
+                        checked: false
+                    }
+                ]
+            },
+            methods: {
+                send() {
+                    console.log(this.user)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .parent {
+            width: 300px;
+            height: 300px;
+            background: red;
+        }
+
+        .child{
+            width: 100px;
+            height: 100px;
+            background: #000;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <textarea @keydown.ctrl.alt.i="keydown"></textarea>
+
+        <!-- 
+            .self 只处理在自身元素上触发的事件
+            .prevent 就是event.preventDefault()
+            .stop 就是 event.stopPropagation();
+            .capture 当前元素优先于子元素捕获事件
+            .once 一次性事件
+
+            键盘修饰符
+            单词修饰符
+
+            数字修饰符
+            键盘码
+            command 
+         -->
+
+        <div 
+            class="parent"
+            @click.self="click('parent', $event)"
+        >
+            <div 
+                class="child"
+                @mousedown.right="run"
+            >
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              
+            },
+            methods: {
+                click(index, e) {
+                    console.log(e.target)
+                    // alert(index)
+                },
+                keydown(event) {
+                    console.log(1111)
+                    
+                },
+                run() {
+                    console.log('is runing')
+                }
+            },
+        })
+    </script>
+</body>
+</html>
