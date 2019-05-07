@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <i-button color="default">按钮1</i-button>
+        <i-button color="primary">按钮2</i-button>
+        <i-button color="success">按钮3</i-button>
+        <i-button color="info">按钮4</i-button>
+        <i-button color="danger">
+            按钮
+        </i-button>
+    </div>
+
+    <script>
+        /**
+         * 全局组件
+         * 编写到实例之前
+         *  Vue.component(name, options)
+         * 1. name 组件的名称
+         * 2. options 组件的选项 （组件的选项和实例的选项几乎一样）
+         * 
+         * <slot/> 插槽 是用来给定义的组件里添加子元素
+         */
+
+         Vue.component('i-button', {
+            props: ['color', 'title'],
+            template: `
+                <button
+                    @click="click"
+                    :class="['btn', 'btn-' + color]"
+                >
+                    <slot/>
+                </button>
+            `,
+         })
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              name: 'xxx'
+            }
+        })
+    </script>
+</body>
+</html>

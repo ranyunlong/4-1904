@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+    <div id="app">
+        <div class="transfer">
+            <ul>
+                <li><input type="checkbox" v-model="arr1Checked"></li>
+                <li v-for="item in arr1">
+                    <input type="checkbox" v-model="item.checked">
+                    {{item.content}}
+                </li>
+            </ul>
+            <div>
+                <button @click="moveLeft">&lt;左移</button>
+                <button @click="moveRight">右移&gt;</button>
+            </div>
+            <ul>
+                <li><input type="checkbox" v-model="arr2Checked"></li>
+                <li v-for="item in arr2">
+                    <input type="checkbox" v-model="item.checked">
+                    {{item.content}}
+                </li>
+            </ul>
+        </div>
+        
+        {{arr1AndArr2Concat}}
+        
+        <ul>
+            <li v-for="item in arr1AndArr2Concat">
+                <input type="checkbox" v-model="item.checked">
+                {{item.content}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                arr1Checked: false,
+                arr2Checked: false,
+                arr1: [
+                    {
+                        checked: false,
+                        content: 'item1'
+                    },
+                    {
+                        checked: false,
+                        content: 'item2'
+                    },
+                    {
+                        checked: false,
+                        content: 'item3'
+                    },
+                    {
+                        checked: false,
+                        content: 'item4'
+                    },
+                    {
+                        checked: false,
+                        content: 'item5'
+                    },
+                    {
+                        checked: false,
+                        content: 'item6'
+                    }
+                ],
+                arr2: [
+                {
+                        checked: false,
+                        content: 'item7'
+                    },
+                    {
+                        checked: false,
+                        content: 'item8'
+                    },
+                    {
+                        checked: false,
+                        content: 'item9'
+                    },
+                    {
+                        checked: false,
+                        content: 'item10'
+                    },
+                    {
+                        checked: false,
+                        content: 'item11'
+                    },
+                    {
+                        checked: false,
+                        content: 'item12'
+                    }
+                ]
+            },
+            watch: {
+                arr1Checked(v) {
+                    this.arr1.forEach(item => {
+                        item.checked = v
+                    })
+                },
+
+                arr2Checked(v) {
+                    this.arr2.forEach(item => {
+                        item.checked = v
+                    })
+                },
+                arr1: {
+                    handler(arr, old) {
+                        
+                    },
+                    deep: true
+                }
+            },
+
+            computed: {
+                arr1Selects() {
+                    return this.arr1.filter(item => item.checked)
+                },
+                arr1NotSelects() {
+                    return this.arr1.filter(item => !item.checked)
+                },
+
+                arr2Selects() {
+                    return this.arr2.filter(item => item.checked)
+                },
+                arr2NotSelects() {
+                    return this.arr2.filter(item => !item.checked)
+                },
+
+                arr1AndArr2Concat() {
+                    return [...this.arr1Selects, ...this.arr2Selects]
+                }
+                
+            },
+
+            methods: {
+                moveRight(){
+                    const selects = this.arr1Selects;
+                    this.arr1 = this.arr1NotSelects;
+                    this.arr2.push(...selects)
+                    // 过滤出被选中的元素
+                    // const arr2 = this.arr1.filter((item, index) => {
+                    //     return item.checked 
+                    // })
+
+                    // 过滤出没有选中的元素 保留
+                    // this.arr1 = this.arr1.filter((item) => {
+                    //     return !item.checked
+                    // })
+
+
+                    // 把选中的移动到另一个数组
+                    // arr2.forEach((item) => {
+                    //     item.checked = false
+                    //     this.arr2.push(item)
+                    // })
+                    
+                    // const arr1 = []
+                    // const arr2 = []
+
+                    // this.arr1.forEach(item => {
+                    //     if (item.checked) {
+                    //         arr2.push(item)
+                    //     } else {
+                    //         arr1.push(item)
+                    //     }
+                    // })
+
+                    // this.arr1 = arr1;
+                    // arr2.forEach(item => {
+                    //     this.arr2.push(item)
+                    // })
+                },
+                moveLeft() {
+                    // const arr1 = this.arr2.filter((item, index) => {
+                    //     return item.checked 
+                    // })
+
+                    // this.arr2 = this.arr2.filter((item) => {
+                    //     return !item.checked
+                    // })
+
+                    // arr1.forEach((item) => {
+                    //     item.checked = false
+                    //     this.arr1.push(item)
+                    // })
+                }
+            },
+        })
+    </script>
+</body>
+</html>

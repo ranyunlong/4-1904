@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- {{v}} -->
+        <!-- <input v-model="v" /> -->
+
+        <ul>
+            <li v-for="item in arr">
+                <input v-model="item.checked" type="checkbox"  />
+            </li>
+        </ul>
+
+        <button @click="add">添加成员</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              v: 1,
+              arr: [
+                  {
+                      checked: true
+                  },
+                  {
+                      checked: true
+                  }
+              ]
+            },
+            methods: {
+                add() {
+                    // this.arr.push({
+                    //     checked: false
+                    // })
+                    console.log(this.arr)
+                    this.arr[2] = {checked: false}
+
+                    console.log(this.arr)
+                }
+            },
+            watch: {
+                // 跟data里的成员同名的函数
+                /**
+                 * newVal 当前变化过后的值
+                 * oldVal 变化之前的值
+                 */
+                v(newVal, oldVal) {
+                    // console.log('v', '发生变化了')
+                    console.log('变化后的值:', newVal)
+                    console.log('变化前的值:', oldVal)
+
+                    if (请通过newVal的页码没有请求到数据) {
+                        把old页码设置为v
+                    }
+                },
+                // arr(newVal, oldVal) {
+                //     console.log('变化后的值:', newVal)
+                //     console.log('变化前的值:', oldVal)
+                // }
+
+                // 当要去监听一个对象改变时 应当使用对象的方式来编写监听器
+                arr: {
+                    // 处理改变监听的
+                    handler(newVal, oldVal) {
+                        console.log('变化后的值:', newVal)
+                        console.log('变化前的值:', oldVal)
+                    },
+                    deep: true // 深度递归模式
+                }
+            },
+        })
+    </script>
+</body>
+</html>

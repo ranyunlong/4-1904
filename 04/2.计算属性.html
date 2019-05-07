@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model.number="num1">
+        +
+        <input type="text" v-model.number="num2">
+
+        {{sum}}
+        <input type="text" v-model.number="num3">
+    
+        <button @click="set">set</button>
+    </div>
+
+    <script>
+        var a = 100;
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              num1: 100,
+              num2: 200,
+              num3: 300
+            },
+            methods: {
+                // sum() {
+                //     console.log(1)
+                //     return this.num1 - this.num2
+                // }
+                set() {
+                   this.num1 = 500
+                   this.num2 = 800
+                }
+            },
+            computed: {
+                sum() {
+                    // 他的计算方式是当 
+                    // data里的引用变量发生了变化
+                    // 重新计算结果
+                    // 只有当引用的成员发生改变才会重新计算结果
+
+                    // 不使用它时 不计算结果
+                    console.log('x')
+                    return this.num1 + this.num2
+                }
+
+                // sum: {
+                //     get () {
+                //         return this.num1 + this.num2
+                //     },
+                //     set (v) {
+                //         // console.log(v)
+                //         this.num1 = v
+                //         this.num2 = v
+                //     }
+                // }
+            },
+        })
+    </script>
+</body>
+</html>

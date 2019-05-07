@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{v}}
+        <input v-model.number="v" />
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                v: 0
+            },
+            methods: {
+                change(){
+                    console.log('change')
+                },
+                input() {
+                    console.log('input')
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.transfer {
+    width: 800px;
+    height: 500px;
+    display: flex;
+    justify-content: space-between;
+    margin: 100px auto;
+}
+
+
+.transfer ul {
+    width: 200px;
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #000;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
