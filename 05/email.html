@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        .active {
+            background: rgba(0, 0, 0, .5);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input
+            @keydown.enter="enter"
+            @keydown.prevent.up="up"
+            @keydown.down="down"
+            v-model="search"
+        />
+        <ul>
+            <li
+                v-for="(item, index) in emailList"
+                :class="{
+                    active: selectIndex === index
+                }"
+            >
+                {{item}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                search: '',
+                selectIndex: 0,
+                emailExt: [
+                    '@qq.com',
+                    '@163.com',
+                    '@hotmal.com'
+                ]
+            },
+            methods: {
+                up(e) {
+                    // console.log('up')
+                    this.selectIndex--;
+                    if (this.selectIndex <= 0) {
+                        this.selectIndex = 0;
+                    }
+                },
+                down() {
+                    // console.log('down')
+                    this.selectIndex++;
+                    if (this.selectIndex >= this.emailList.length) {
+                        this.selectIndex = this.emailList.length - 1;
+                    }
+                },
+                enter() {
+                    this.search = this.emailList[this.selectIndex]
+                }
+            },
+            computed: {
+                emailList() {
+                    // filter 过滤回调里 返回true的成员
+                    // find 返回找到的那个 找不到返回undfind
+                    // map 可以根据一个数组生成一个新的数组
+                    // 新数组的成员需要在回调函数里返回
+
+                    if (!this.search) return [];
+                    if (/\@/.test(this.search)) return [];
+
+                    return this.emailExt.map(item => {
+                        return this.search + item
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>

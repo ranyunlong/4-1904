@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script>
+        /**
+         * 
+         * 在template里使用组件时 如果没有嵌套子元素可以不用写双标签但是必须以/结束
+         * 
+         * 组件的props
+         * 1. 可以为数组 成员是字符串
+         * 2. 可以为对象 对象的key是prop名称 对象的value是构造函数 是prop的值
+         * 构造函数是用来验证这个prop的
+         * 
+         */
+
+         function Student(name, age) {
+             this.name = name;
+             this.age = age
+         }
+
+        Vue.component('Button', {
+            template: `
+                <button 
+                    :disabled="disabled"
+                    :class="['btn', className, {
+                        'btn-lg': size === 'lg',
+                        'btn-sm': size === 'sm',
+                        'btn-xs': size === 'xs',
+                        'btn-block': block,
+                        active
+                    }]"
+                >
+                    <slot />    
+                </button>
+            `,
+            props: {
+                // color: String
+                iColor: { // prop的value也可以是对象
+                    type: String,
+                    default: 'default', // 在使用组件时 不传prop的情况下使用的默认值
+                    // required: true   // 设置是否必须传递该参数
+                },
+                size: String,
+                // Boolean 值的prop有个特点 如果标签上有这个prop即使没有值也会为true 没有prop就为false 或者设置为false
+                block: Boolean,
+                disabled: Boolean,
+                active: Boolean,
+                width: [Number, String],
+                postion: {
+                    validator(value) {
+                        return typeof value === 'object' && !isNaN(value.x) && !isNaN(value.y)
+                    }
+                },
+                s: Student
+            },
+            computed: {
+                className() {
+                    return 'btn-' + this.iColor
+                }
+            },
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                value: 111,
+                student: new Student('zhangsan', 10)
+            },
+            template: `
+            <div id="app">
+                <Button size="sm" :s="student" :postion="{x: 10, y: 20}" block>xx</Button>
+                <Button iColor="primary" size="xs" active block>xx</Button>
+                <Button iColor="success" size="lg" disabled :block="true">xx</Button>
+            </div>
+            `
+        })
+    </script>
+</body>
+</html>

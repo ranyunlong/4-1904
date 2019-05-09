@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        // 传参数时 尽量避免传递对象 免得出错
+        // 除了class和style以外其他可以用作于prop
+        // 一个自定义的组件 默认是没有任何事件的
+        const Test = {
+            // 如果是一些个 prop没有定义的 prop 设置inheritAttrs 为false 则不会显示这个属性在组件的根元素上
+            inheritAttrs: false,
+            props: {
+                name: String,
+                index: String,
+            },
+            data() {
+                return {
+                    iName: '123'
+                }
+            },
+            watch: {
+                name: {
+                    handler(v) {
+                        this.iName = '123'
+                    },
+                    deep: true
+                }
+            },
+            template: `
+            <div class="test" @click="click">
+                子组件{{iName.value}}
+                {{index}}
+                <button @click="change">改变name</button>    
+            </div>
+            `,
+            methods: {
+                change() {
+                    // this.iName = 'xx'
+                    this.iName.value = '123'
+                },
+                click() {
+                    this.$emit('clickAA', JSON.parse(JSON.stringify(this.iName)))
+                }
+            },
+        }
+        
+        
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              iname: {value: '1223'}
+            },
+            template: `
+                <div class="app">
+                    <input v-model="iname.value" />
+                    <Test @clickAA="run" class="xx" :name="iname" aa="11" index="123" />    
+                </div>
+            `,
+            components: {
+                Test
+            },
+            methods: {
+                run(e) {
+                  this.iname = e
+                } 
+            }
+        })
+    </script>
+</body>
+</html>

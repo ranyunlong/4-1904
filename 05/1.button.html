@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        /**
+         * html 会把所有的标签名称和属性名称转换成小写
+         * 
+         * 全局注册组件
+         * Vue.component(Name, {})
+         * 1. 组件命名
+         * (1) 大驼峰命名的组件 可以使用烤串/大驼峰/小驼峰
+         * (2) 小驼峰命名的组件 可以使用烤串/小驼峰 ？次选
+         * (3) 烤串命名的组件 只能使用烤串 ？最次
+         * 2.组件使用
+         * (1) 在html里使用 组件时使用烤串命名法 
+         * (2) 在template 选项里使用时 可以使用烤串/大驼峰/小驼峰
+         * 
+         * 
+         * 
+         * 局部组件
+         * const cpt = {}
+         * 
+         * 1. 主要是为了减少代码加载 （主要是webpack里）
+         * 2. 减少命名空间
+         * 用的比较少的组件 就用局部组件的方式
+         * 用的比较多的组件 就用全局组件
+         * 
+         * 使用局部组件
+         * 必须要在使用的组件里注册，不注册不能用
+         * 1. 要使用局部组件需要在使用的地方注册 components选项里注册
+         * 
+         * template 选项
+         * 如果组件或者vue实例上有 template选项 就会用组件template里的内容
+         * 替换掉挂载的元素
+         */
+
+         const IInput = {
+             template: `
+                <input />
+             `
+         }
+
+
+         Vue.component('XButton', {
+             template: `
+             <button>
+                <IInput></IInput>
+                <slot />
+            </button>
+             `,
+             components: {
+                IInput
+             }
+         })
+
+         
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              
+            },
+            template: `
+                <div>
+                    <XButton>111</XButton>
+                    <x></x>    
+                </div>
+            `,
+            components: {
+                IInput,
+                x: IInput
+            }
+        })
+    </script>
+</body>
+</html>

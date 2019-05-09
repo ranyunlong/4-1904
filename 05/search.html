@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input v-model="search" />
+        <ul>
+            <li v-for="username in searchList">{{username}}</li>
+        </ul>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                search: '',
+                userlist: [
+                    '张三',
+                    '李四',
+                    '老王',
+                    '李三',
+                    '小芳',
+                    '小明'
+                ]
+            },
+            computed: {
+                searchList() {
+                    if (!this.search) return [];
+                    return this.userlist.filter(username => {
+                        //    return !!~username.indexOf(this.search)
+                        return new RegExp(this.search).test(username)
+                    })   
+                }
+            },
+        })
+    </script>
+</body>
+</html>
