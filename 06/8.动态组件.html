@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+
+        /**
+         * <keep-alive> vue内置的一个组件
+         * 
+         * 用于缓存一些被销毁掉的组件，使用了之后组件将不会被销毁，而是缓存起来
+         * 
+         */
+
+        Vue.component('cp1', {
+            data() {
+                return {
+                    value: ''
+                }
+            },
+            template: `
+            <div>
+                cp1
+                <input v-model="value" />
+            </div>
+            `
+        })
+
+        Vue.component('cp2', {
+            data() {
+                return {
+                    value: ''
+                }
+            },
+            template: `
+            <div>
+                cp2
+                <input v-model="value" />
+            </div>
+            `
+        })
+
+        Vue.component('cp3', {
+            data() {
+                return {
+                    value: ''
+                }
+            },
+            template: `
+            <div>
+                cp3
+                <input v-model="value" />
+            </div>
+            `
+        })
+
+
+        /**
+         * Vue 内置组件component
+         * <component :is="字符串，已有的组件名称字符串" />
+         */
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              value: 'cp3',
+              list: ['cp1', 'cp2', 'cp3']
+            },
+            template: `
+            <div>
+                <keep-alive>
+                    <component :is="value" />
+                </keep-alive>
+                <button @click="value=item" v-for="item in list">{{item}}</button> 
+            </div>
+            `
+
+        })
+    </script>
+</body>
+</html>

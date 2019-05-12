@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        const Test = {
+            props: {
+                // prop的数据只能使用不能改变
+                title: String,
+                user: Object
+            },
+            data() {
+                return {
+                    iTitle: this.title,
+                    iUser: {
+                        ...this.user
+                    }
+                }
+            },
+            watch: {
+                iTitle(v) {
+                    this.$emit('change', v)
+                },
+                iUser: {
+                    handler(v) {
+                        this.$emit('userChange', {
+                            ...this.iUser
+                        })
+                    },
+                    deep: true
+                }
+            },
+            template: `
+                <div>
+                    <h1>{{iTitle}}</h1>
+                    <input v-model="iTitle" />
+                    {{iUser}}
+                    <input v-model="iUser.user" />
+                </div>
+            `
+        }
+
+        /**
+         * 组件是独立的
+         * 
+         */
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                title: '这是一个标题',
+                obj: {user: '张三'}
+            },
+            components: {
+                Test
+            },
+            template: `
+                <div>
+                    <input v-model="title" />
+                    {{obj}}
+                    父
+                    ----------
+                    <Test @userChange="handleUserChange" @change="handleChange" :user="obj" :title="title" />
+                    
+                </div>
+            `,
+            methods: {
+                handleChange(v) {
+                    console.log(v)
+                    // 如果父组件也想同步到子组件的数据
+                    // 在这里就可以对自己的数据进行赋值
+                    this.title = v
+                },
+                handleUserChange(v) {
+                    console.log(v)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

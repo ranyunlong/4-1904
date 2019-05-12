@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+
+        /**
+         * 设计组件时，子组件必须无条件同步父组件的参数
+         * 这样子组件才能受到控制
+         */
+
+        const Test = {
+            props: {
+                title: String
+            },
+            data() {
+                return {
+                    // 第一次必须要给内部的data
+                    iTitle: this.title
+                }
+            },
+            watch: {
+                title(v) {
+                    // 第一次默认值不会被触发
+                    this.iTitle = v
+                },
+                iTitle(v) {
+                    console.log('iTitle 改变了')
+                    this.$emit('change', v)
+                }
+            },
+            template: `
+            <div @click="handleClick">
+                <h1>{{iTitle}}</h1>
+                <input v-model="iTitle" />    
+            </div>
+            `,
+            methods: {
+                handleClick() {
+                    console.log('点击')
+                    this.iTitle = '标题一个'
+                }
+            },
+        }
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              title: '标题一个1'
+            },
+            template: `
+            <div>
+                <input v-model="title" />  
+                <br />
+                ------------------------------
+                <Test @change="handleChange" :title="title" />  
+            </div>
+            `,
+            components: {
+                Test
+            },
+            methods: {
+                handleChange(v) {
+                    this.title = v
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+
+        /**
+         * 父组件
+         * 父向子传递数据 通过属性prop 来传递
+         * 
+         * 子组件
+         * 子向父传递数据 公共自定义的事件 传递
+         */
+        Vue.component('Table', {
+            props: {
+                striped: Boolean,
+                bordered: Boolean,
+                colums: Array,
+                data: Array
+            },
+            template: `
+            <table :class="['table', {
+                'table-striped': striped,
+                'table-bordered': bordered
+            }]">
+                <thead>
+                    <th v-for="item in colums">{{item.title}}</th>    
+                </thead>
+                <tbody>
+                    <tr @click="selectRow(item)" v-for="item in data">
+                        <td v-for="col in colums">
+                            {{item[col.key]}}
+                        </td>
+                    </tr>    
+                </tbody>
+            </table>
+            `,
+            methods: {
+                selectRow(item) {
+                    this.$emit('selectrow', item)
+                },
+                selectCol() {
+                    this.$emit('selectcol')
+                }
+            },
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                colums: [
+                        {
+                            key: 'id',
+                            title: 'ID'
+                        },
+                        {
+                            key: 'username',
+                            title: '姓名'
+                        },
+                        {
+                            key: 'age1',
+                            title: '年龄'
+                        }
+                    ],
+                data: [
+                    {
+                        id: 1,
+                        age1: 10,
+                        username: '小明'
+                    },
+                    {
+                        id: 2,
+                        age1: 12,
+                        username: '小芳'
+                    },
+                    {
+                        id: 3,
+                        age1: 12,
+                        username: '小芳'
+                    }
+                ]
+            },
+            template: `
+            <Table 
+                @selectrow="handleSelectRow"
+                bordered
+                striped
+                :colums="colums"
+                :data="data"
+            />
+            `,
+            methods: {
+                handleSelectRow(item) {
+                    
+                }
+            }
+        })
+    </script>
+</body>
+</html>

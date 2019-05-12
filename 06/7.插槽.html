@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .card {
+            width: 500px;
+            height: 300px;
+            border: 1px solid #000;
+            border-radius: 5px;
+        }
+        .card .header {
+            height: 50px;
+            border-bottom: 1px solid #000;
+            display: flex;
+            justify-content: space-between;
+        }
+        .card .content {
+            height: 249px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+
+        /**
+         * 默认插槽
+         * <slot/> 是一个vue内置的组件
+         * 1.name 可以给插槽指定一个名称 
+         * 
+         * 
+         * 命名插槽
+         * 具名插槽
+         * 具有名称的插槽
+         * <slot name="header"/>
+         * 
+         * 
+         * 作用域插槽
+         * 利用插槽绑定参数 
+         * 在使用插槽的时候获取组件内部的数据
+         * <slot name="ccc" :aa="x" :bb="y"/>
+         * 
+         * <template slot="ccc" slot-scope="obj">
+         *    {{obj.aa}} {{obj.bb}}
+         * </template>
+         * 
+         * 
+         * <template /> 组件说一个vue内置的组件
+         * 他的作用说用来装html标签的 他自己不会被编译成标签
+         * 他只会把他里面的内容带过去
+         * 使用它不会打破 组件内的布局 你不需要去重新编写样式
+         * 
+         * 可以在任意的标签上 加上slot="插槽名称就可以了"
+         * 
+         * 
+         * 作用域插槽？
+         * 
+         * 
+         */
+
+        const Card = {
+            data() {
+                return {
+                    title:'aaa'
+                }
+            },
+            template: `
+            <div class="card">
+                <div class="header">
+                    <slot :value="title" :age="20" name="header"/>
+                </div>
+                <div class="content">
+                    <slot name="content"/>
+                </div>
+            </div>
+            `
+        }
+
+
+        /**
+         * 模板在哪写 就使用哪的变量 跟插槽用在哪无关
+         * 模板是在当前组件内被编译过后传到插槽里的
+         * 
+         * 插槽上可以是用v-bind 绑定数据
+         * bind的数据 prop名称将会作为对象的key prop绑定的数据将作为对象的值 传递到slot-scope里
+         * 
+         * :name="123"
+         * :age = 20
+         * 转换成这个样子
+         * {name: 123, age: 20}
+         * 
+         * 在使用插槽时可以使用slot-scope 来接收插槽上绑定的数据
+         * 
+         */
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              title: 'haha'
+            },
+            components: {
+                Card
+            },
+            template: `
+            <Card>
+                <template slot-scope="obj" slot="header">
+                    <h2 >{{obj.value}} {{obj.age}}</h2>
+                    <button>关闭</button>
+                </template>
+                <button slot="content">xxx</button>
+            </Card>
+            `
+        })
+    </script>
+</body>
+</html>

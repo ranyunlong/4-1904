@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        const ISwitch = {
+            props: {
+                // 如果组件上使用了v-model指令组件内 默认会有一个叫value的prop
+                value: Boolean
+            },
+            data() {
+                return {
+                    checked: this.value
+                }
+            },
+            watch: {
+                value(value, oldValue) {
+                    this.checked = value
+                },
+                checked(value, oldValue) {
+                    // 如果组件上使用了v-model指令
+                    // 那么父组件上默认会监听一个事件叫 input事件
+                    // 你只需要给input 传参 父组件会自动同步
+                    this.$emit('input', value)
+                }
+            },
+            template: `
+            <input type="checkbox" v-model="checked" />
+            `
+        }
+
+        /**
+         * v-model
+         * 
+         * 1. 给组件传递一个prop 叫value的属性 值说v-model里的值
+         * 2. 给组件监听一个input 事件 默认把这个事件传递过来的值 赋值给v-model 绑定的数据
+         * 
+         * :value="" 
+         * @input=""
+         * 
+         * 合并成
+         * 
+         * v-model
+         */
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              selected: false
+            },
+            components: {
+                ISwitch
+            },
+            template: `
+            <div>
+                {{selected}}
+                <ISwitch v-model="selected" />
+            </div>
+            `,
+            methods: {
+                handleChange(value) {
+                    console.log(value)
+                    // this.selected = value
+                }
+            },
+        })
+    </script>
+</body>
+</html>
