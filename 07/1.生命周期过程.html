@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        const Test = {
+            props: {
+                title: String
+            },
+            data() {
+                return {
+                    name: null,
+                    size: 0
+                }
+            },
+            template: `
+            <div>
+                {{title}}
+                <input v-model="name" />
+                <button @click="changeTitle()">修改标题</button>
+            </div>
+            `,
+            methods: {
+                changeTitle() {
+                    this.title = Math.random()
+                    console.log(this.title)
+                }
+            },
+            watch: {
+                size(newVal, oldVal) {
+                    // 知道这个size在更新之前的大小和更新之后的大小
+                },
+                name(v) {
+                    this.$parent.xx = v
+                }
+            },
+            beforeCreate() {
+                // 在组件创建之前 表示组件还没创建好
+                // console.log(this) // this 是一个对象 在内存的堆里
+                // console.log(this.title)
+                // 这个钩子的作用？ 一般用它来做ajax 请求 异步操作
+                console.log('组件创建之前')
+                setTimeout(() => {
+                    // console.log(this.title)
+                    // this.name = 'aaa'
+                }, 0)
+                
+            },
+            created() {
+                // 在这儿才创建好了
+                // console.log('组件以及创建好了')
+                // console.log(this.title)
+                // 如果说是同步的操作 比如给data选项里默认赋值
+                // this.name = 'bbb'
+
+                // $children 可以访问当前的子组件
+                // $parent 可以访问父组件的实例对象
+                // $root 可以用来访问当前的实例  也就说根组件/元素
+                // $el 可以用来查看当前组件的html元素 真实dom
+                // $slots 插槽的东西一般会在 $slots里面
+                // 在挂载之前根本是无法访问到当前的组件的真实的dom元素的
+                // console.log(this.$el)
+                // console.log(this.$parent, 111)
+
+            },
+            beforeMount() {
+                console.log('组件挂载之前')
+                // 准备挂载元素了 但是还是不能访问到真实dom元素
+                // 在组件将要显示之前 做一些检查数据或者 检查状态的操作
+                
+            },
+            mounted() {
+                console.log('挂载完毕了')
+                console.dir(this.$el.clientHeight)
+            },
+            beforeUpdate() {
+                // 必须是 模板绑定的变量发生了改变之后 才会 触发这个钩子
+                // 检测，模板是否发生了变化
+                // 变化之前去设置size
+                console.log('组件更新之前')
+            },
+            updated() {
+                 // 必须是 模板绑定的变量发生了改变之后 才会 触发这个钩子
+                 // 可以用来获取 元素元素的大小变化
+                //  变化之前去设置size
+                console.log('组件更新之后')
+            },
+            beforeDestroy() {
+                console.log('将要销毁')
+                // 可以在这个地方 保存这个组件里的状态  页面将要离开了
+            },
+            destroyed() {
+                console.log('销毁之后')
+                // 检查操作 ？？？ 页面离开
+            },
+
+            activated() {
+                // 缓存组件激活后 显示出来之后
+                console.log('缓存组件显示啦')
+            },
+            deactivated() {
+                // 缓存组件取消激活后
+                console.log('缓存组件隐藏啦')
+            },
+
+        }
+
+        const vm = new Vue({
+            
+            el: '#app',
+            data: {
+              show: false,
+              xx: '',
+              list: []
+            },
+
+            watch:{
+                xx(v) {
+                    // this.$children[0].name = v
+                }
+            },
+            created() {
+                // console.log(this.$children[0])
+            },
+            mounted() {
+                // this.$children[0].name = '哈哈'
+                // 对应模板里的ref
+                this.list = this.$refs.tabPanne.map(item => item.title)
+            },
+            template: `
+            <div class="app">
+
+                <ul>
+                    <li v-for="item in list">111{{item}}</li>    
+                </ul>
+                <keep-alive>
+                    <div>
+                        <Test ref="tabPanne" :title="item" v-for="item in ['标题1', '标题2','标题3']" />
+                    </div>
+                    
+                </keep-alive>
+
+                <input v-model="xx" />
+
+                <button @click="show = !show">切换显示状态</button>
+            </div>
+            `,
+            components: {
+                Test
+            }
+        })
+    </script>
+</body>
+</html>

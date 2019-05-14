@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        Vue.component('Tree', {
+            name: 'Tree',
+            props: {
+                data: Array
+            },
+            template: `
+            <ul class="tree">
+                <li v-for="item in data">
+                    <div class="title" @click="item.expand = !item.expand">
+                        姓名:<span>{{item.name}}</span> 性别:<span>{{item.sex}}</span>
+                    </div>
+                    <Tree :data="item.children" v-if="Array.isArray(item.children)" v-show="item.expand" />
+                </li>
+            </ul>
+            `
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              tree: [
+                    {
+                        name: '张三',
+                        sex: '男',
+                        expand: true,
+                        children: [
+                            {
+                                name: '小张三1',
+                                sex: '男',
+                                expand: true,
+                                children: [
+                                    {
+                                        name: '小小张三1',
+                                        expand: true,
+                                        sex: '男',
+                                    },
+                                    {
+                                        name: '小小张三2',
+                                        expand: true,
+                                        sex: '男',
+                                    },
+                                    {
+                                        name: '小小张三3',
+                                        expand: true,
+                                        sex: '男',
+                                    }
+                                ]
+                            },
+                            {
+                                name: '小张三2',
+                                expand: true,
+                                sex: '男',
+                                children: [
+                                    {
+                                        name: '小小张三21',
+                                        expand: true,
+                                        sex: '男',
+                                    },
+                                    {
+                                        name: '小小张三22',
+                                        expand: true,
+                                        sex: '男',
+                                    },
+                                    {
+                                        name: '小小张三23',
+                                        expand: true,
+                                        sex: '男',
+                                    }
+                                ]
+                            },
+                            {
+                                name: '小张三3',
+                                expand: true,
+                                sex: '男',
+                                children: [
+                                    {
+                                        name: '小明',
+                                        expand: true,
+                                        sex: '男',
+                                        children: [
+                                            {
+                                                name: '小芳',
+                                                expand: true,
+                                                sex: '女',
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]   
+                    }
+                ]
+            },
+            template: `
+            <Tree :data="tree" />
+            `
+        })
+    </script>
+</body>
+</html>
