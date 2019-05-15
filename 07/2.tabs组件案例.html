@@ -105,6 +105,9 @@
                     return this.$parent.active
                 }
             },
+            destroyed() {
+                console.log('销毁了')
+            },
         })
 
         Vue.component('Test', {
@@ -119,29 +122,24 @@
             data: {
                 store: {
                     labels: [],
-                    tabs: null
+                    tabs: null,
+                    show: false
                 }
             },
             mounted() {
                 console.log(this.$refs)
             },
-            template: `
-            <div>
-                <Test ref="aaa" :key="item" v-for="item in 4" />
-                <div ref="xxx" :key="'a' + item" v-for="item in 4">21321321</div>
-            </div>
+            template:`
+            <keep-alive>
+                <Tabs :value="1">
+                    <TabPane v-if="show" label="选项卡1" :name="1">选项卡内容1</TabPane>
+                    <TabPane label="选项卡2" :name="2">选项卡内容2</TabPane>
+                    <TabPane label="选项卡3" :name="3">选项卡内容3</TabPane>
+                    <TabPane label="选项卡4" :name="4">选项卡内容4</TabPane>
+                    <TabPane label="选项卡5" :name="5">选项卡内容5</TabPane>
+                </Tabs>    
+            </keep-alive>
             `
-            // template:`
-            // <keep-alive>
-            //     <Tabs :value="1">
-            //         <TabPane label="选项卡1" :name="1">选项卡内容1</TabPane>
-            //         <TabPane label="选项卡2" :name="2">选项卡内容2</TabPane>
-            //         <TabPane label="选项卡3" :name="3">选项卡内容3</TabPane>
-            //         <TabPane label="选项卡4" :name="4">选项卡内容4</TabPane>
-            //         <TabPane label="选项卡5" :name="5">选项卡内容5</TabPane>
-            //     </Tabs>    
-            // </keep-alive>
-            // `
         })
     </script>
 </body>
