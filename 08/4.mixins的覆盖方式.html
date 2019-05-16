@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        Vue.mixin({
+            data() {
+                return {
+                    title: 'mixin'
+                }
+            },
+            mounted() {
+                console.log(this)
+            },
+        })
+
+        Vue.component('Test', {
+            template: `
+            <div>222</div>
+            `
+        })
+
+        /**
+         * 如果组件内部和混入的发生冲突
+         * 组件内部的默认会替换掉混入的成员（也有例外）
+         * 钩子函数例外？
+         *  
+         * 如果组件中的钩子和混入的钩子发送冲突
+         * 钩子是不会被覆盖的
+         * 混入的钩子先运行 组件的钩子后运行
+         */
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                // title:'aaa'
+            },
+            template: `
+            <div>{{title}}</div>
+            `,
+            mounted() {
+                console.log('组件的钩子运行了')
+            }
+        })
+    </script>
+</body>
+</html>

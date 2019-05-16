@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        Vue.component('Page', {
+            props: {
+                total: {
+                    type: Number,
+                    default: 0
+                },
+                current: {
+                    type: Number,
+                    default: 1
+                },
+                pageSize: {
+                    type: Number,
+                    default: 10
+                },
+            },
+            watch: {
+                iCurrent(v) {
+                    this.$emit('update:current', v)
+                },
+                current(v) {
+                    this.iCurrent = v;
+                }
+            },
+            data() {
+                return {
+                    iCurrent: this.current
+                }
+            },
+            template: `
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li
+                        @click="reduce"
+                    >
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li
+                        :class="{active: iCurrent === item}"
+                        v-for="item in  "
+                        @click="iCurrent = item"
+                    >
+                        <a href="#">{{item}}</a>
+                    </li>
+                    <li @click="move"><a href="#">...</a></li>
+                    <li
+                        :class="{active: iCurrent === item}"
+                        v-for="item in afters"
+                        @click="iCurrent = item"
+                    >
+                        <a href="#">{{item}}</a>
+                    </li>
+                    <li @click="add">
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            `,
+            computed: {
+                page() {
+                    if (!this.total) return 0;
+                    return Math.ceil(this.total / this.pageSize)
+                },
+                pagePercent50() {
+                    return this.page / 2
+                },
+                befores() {
+                    if (this.iCurrent > this.pagePercent50) {
+                        return [1]
+                    }
+                    const arr = []
+                    for(let i = 1; i <= this.iCurrent + 2; i++) {
+                        arr.push(i);
+                    }
+                    return arr;
+                },
+                afters() {
+                    if (this.iCurrent <= this.pagePercent50) {
+                        return [this.page];
+                    }
+                    const arr = []
+                    for(let i = this.iCurrent - 2; i <= this.page; i ++) {
+                        arr.push(i);
+                    }
+
+                    return arr;
+                }
+            },
+
+            methods: {
+                add() {
+                    this.iCurrent ++;
+                    if (this.iCurrent > this.page) {
+                        this.iCurrent = this.page;
+                    }
+                },
+                reduce() {
+                    this.iCurrent --;
+                    if (this.iCurrent < 1) {
+                        this.iCurrent = 1;
+                    }
+                },
+                move() {
+
+                }
+            },
+        })
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                current: 1
+            },
+            template: `
+            <div class="app">
+                {{current}}
+                <Page :total="100" :current.sync="current" />
+            </div>
+            `
+        })
+    </script>
+</body>
+</html>

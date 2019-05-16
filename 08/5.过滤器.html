@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        /**
+         * 全局过滤器
+         * Vue.filter('过滤器名称', (value) => {
+         * 
+         * })
+         * 
+         * 局部过滤器写到组件内部
+         * filters 对象的key 是过滤器的名称 对象的value 是一个方法 会传入管道的数据
+         */
+
+         Vue.filter('yen', (value) => {
+            // console.log(value)
+            return '￥' + value
+         })
+         
+         Vue.filter('aB', (value) => {
+            return value.toUpperCase()
+         })
+
+         Vue.filter('fNumber', (value) => {
+             return value.replace(/[0-9]/g, '')
+         })
+
+        //  Vue.filter('Ab', (value) => {
+        //     return value.toLowerCase()
+        //  })
+         
+         const vm = new Vue({
+            el: '#app',
+            data: {
+                pirce: 100,
+                font: 'abcd100'
+            },
+            template: `
+            <p>{{pirce | yen }} {{font | aB | fNumber | Ab}}</p>
+            `,
+            mixins: [],
+            components: {},
+            filters: {
+                Ab(v) {
+                    return 'aa' + v;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 300px;
+            height: 300px;
+            background: red;
+        }
+
+        /*
+         * enter 是进入动画 
+         */
+        .fade1-enter, .fade1-leave-to {
+            opacity: 0;
+            transform: scale(0, 0);
+        }
+
+        /*
+         * enter-active 进入动画被激活时的状态
+         */
+        .fade1-enter-active, .fade1-leave-active {
+            transition: all 1s linear;
+        }
+
+        /*
+         * enter-to 是进入动画到什么样子
+         */
+        .fade1-enter-to, .fade1-leave {
+            opacity: 1;
+            transform: scale(1, 1);
+        }
+
+        @keyframes tanslateIn {
+            from {
+                transform: translate(-100%);
+            }
+            
+            to {
+                transform: translate(0);
+            }
+        }
+
+        @keyframes tanslateOut {
+            from {
+                transform: translate(0);
+            }
+
+            to {
+                transform: translate(-100%);
+            }
+        }
+
+
+        .tanslate-enter-active {
+            animation: tanslateIn 1s linear;
+        }
+
+        .tanslate-leave-active {
+            animation: tanslateOut 1s linear;
+        }
+
+        /**
+         * leave 动画离开
+         */
+        /* .fade-leave {
+            opacity: 1;
+        } */
+
+        /*
+         * leave-active 离开动画被激活时的状态
+         */
+        /* .fade-leave-active {
+            transition: opacity 1s linear;
+        } */
+
+        /**
+         * leave-to 离开到什么状态
+         */
+         /* .fade-leave-to {
+            opacity: 0;
+         } */
+
+         .time3 {
+            animation-duration: 3s;
+         }
+    </style>
+    <link rel="stylesheet" href="./animate.css">
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="show = !show">切换</button>
+        <!-- 
+            transition 是vue内置的一个组件 用来处理过渡和动画的
+            name css的前缀 用来区分不用的动画
+            过渡一个元素
+
+            transition-group 过渡一组元素 由v-for循环出的多个元素的过渡
+         -->
+        <transition
+            enter-active-class="time3 fadeInLeft"
+            leave-active-class="time3 fadeOutRight"
+        >
+            <div v-if="show" class="box"></div>
+        </transition>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                show: true
+            }
+        })
+    </script>
+</body>
+</html>

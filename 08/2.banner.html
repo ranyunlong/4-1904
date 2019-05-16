@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .banner-item {
+            width: inherit;
+            height: inherit;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .banner-item img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn {
+            position: absolute;
+            top: 50%;
+            height: 50px;
+            width: 50px;
+            margin-top: -25px;
+            background: rgba(0, 0, 0, .5);
+        }
+
+        .btn:hover {
+            background: rgba(0, 0, 0, .7);
+        }
+
+        .btn-left {
+            left: 0;
+        }
+
+        .btn-right {
+            right: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="./animate.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        /**
+         * transition-group
+         * 在使用时 必须给循环的子元素绑定一个:key=""
+         * key的值不能是数组的下标 可以使用字符串
+         * tag 默认会生成一个span来包住元素 可以使用tag来切换其他的标签
+         * class可以给transition-group设置样式
+         */
+        Vue.component('Banner', {
+            data() {
+                return {
+                    images: ['https://imgcps.jd.com/ling/6603114/576O5aaG5oqk6IKk5LiT5Zy6/54iG5qy-5LiN5q2iNeaKmA/t-5bfe463bc3ba2968ce58818a/e277721a.jpg', 'https://img1.360buyimg.com/da/s590x470_jfs/t30901/342/1271045952/78576/aab75921/5cdb5b38N4990e8b4.jpg!q90!cc_590x470.webp', 'https://img1.360buyimg.com/pop/s590x470_jfs/t1/43766/9/4039/77567/5cd114adEf558d38f/d11d895406b12cdf.jpg!q90!cc_590x470.webp'],
+                    selectIndex: 0,
+                    enter: '',
+                    leave: '',
+                    isMouseover: false
+                }
+            },
+            watch: {
+                selectIndex(newVal, oldValue) {
+                    if (newVal > oldValue) {
+                        // 从左边进入
+                        this.enter = "animated slideInLeft"
+                        this.leave = "animated slideOutRight"
+                    } else if (newVal < oldValue) {
+                        // 从右边进入
+                        this.enter = "animated slideInRight"
+                        this.leave = "animated slideOutLeft"
+                    }
+                }
+            },
+            template:`
+            <div 
+                class="banner"
+                @mouseover="isMouseover=true"
+                @mouseout="isMouseover=false"
+            >
+                <transition-group
+                    :enter-active-class="enter"
+                    :leave-active-class="leave"
+                    tag="div"
+                    class="banner"
+                >
+                    <div
+                        v-for="(item, index) in images"
+                        v-if="index === selectIndex"
+                        class="banner-item"
+                        
+                        :key="item"
+                        :style="{
+                            background: item
+                        }"
+                    >
+                        <img :src="item" />
+                    </div>  
+                </transition-group>
+                <input ref="ip" />
+                <div @click="prev" class="btn btn-left"></div>
+                <div @click="next" class="btn btn-right"></div>
+            </div>
+            `,
+            mounted() {
+                // this.$refs.ip.onkeydown=
+                // const el = this.$refs.ip;
+                // el.focus();
+                // this.$refs.ip.addEventListener('keydown')
+                setInterval(() => {
+                    if (!this.isMouseover) {
+                        this.next()
+                    }
+                }, 2000)
+            },
+            methods: {
+                prev() {
+                    this.selectIndex--;
+                    if (this.selectIndex < 0) {
+                        this.selectIndex = this.images.length - 1;
+                    }
+                },
+                next(){
+                    this.selectIndex ++;
+                    if(this.selectIndex > this.images.length - 1) {
+                        this.selectIndex = 0
+                    }
+                }
+            },
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              
+            },
+            template: `<Banner />`
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        /**
+         * 全局混入
+         * Vue.mixin(options)
+         * options 组件或者实例的选项
+         * 给所有的组件混入成员
+         * 
+         * 比如说，我设计一个组件
+         * 组件的所有css前缀都是一样的
+         * 如果你所有的组件里都需要有某个相同的方法 或者 成员的时候 使用全局混入
+         */
+
+        // Vue.mixin({
+        //     data() {
+        //         return {
+        //             title: 'xx',
+        //             prefix: 'c-xx-' 
+        //         }
+        //     },
+        //     methods: {
+        //         run() {
+        //             alert(1)
+        //         }
+        //     },
+        // })
+
+        // 局部混入和局部组件一样就是一个对象
+        // 需要在使用的地方注册
+        // 局部混入的作用？
+        /**
+         * 不是每一个组件里都有的东西
+         * 有一部分组件需要相同的变量或者成员
+         * 就可以使用局部混入
+         */ 
+        const mix = {
+            data() {
+                return {
+                    prefix: 'c-xx-',
+                    title: 'xx'
+                }
+            },
+            methods: {
+                run() {
+
+                }
+            },
+        }
+
+        const Test = {
+            // 注册局部 混入
+            mixins: [mix],
+            template: `
+            <div :class="prefix+'aaa'">test{{title}}</div>
+            `,
+            mounted() {
+                this.run()
+            },
+        }
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              title: 'xxx',
+            },
+            template: `
+            <div>
+                <Test />    
+            </div>
+            `,
+            components: {
+                Test
+            }
+        })
+    </script>
+</body>
+</html>
