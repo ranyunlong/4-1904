@@ -1,0 +1,22 @@
+.box {
+  background: #200707;
+}
+.box1 {
+  background: green;
+}
+.parent {
+  width: 100px;
+  height: 200px;
+  border: 1px #ddd solid;
+}
+.parent .child {
+  width: 200px;
+  height: 200px;
+  background: green;
+  border: 1px green solid;
+}
+/*
+ * <div class="parent">
+ *     <div class="child"></div>
+ * </div>
+ */

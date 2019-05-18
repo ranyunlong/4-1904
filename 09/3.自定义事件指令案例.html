@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-listen:click.stop.prevent="run">111</div>
+    </div>
+
+    <script>
+        // Vue.directive('touch', {
+
+        // })
+        Vue.directive('listen', {
+            bind(el, binding, vnode) {
+                /**
+                 * binding
+                 *  1.arg 在指令后面用冒号 的字符串就是arg参数 v-listen:click
+                 *  2.modifiers 指令上带的修饰符就会在这个属性里 指令修饰符是可以多个的 .stop.aa 
+                 */
+                // 自定义事件监听 必须传进来的value值是一个函数
+                console.log(binding)
+                if (typeof binding.value === 'function') {
+                    el.addEventListener(binding.arg, (e) => {
+                        if (binding.modifiers.stop) {
+                            e.stopPropagation()
+                        }
+
+                        if (binding.modifiers.prevent) {
+                            e.preventDefault()
+                        }
+                        // console.log(binding.modifiers)
+                        binding.value(e)
+                    })
+                } else {
+                    console.error(binding.expression +' is not an function', 'got' + typeof binding.value)
+                }
+            }
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                // run: '123'
+            },
+            methods: {
+                run(e) {
+                    console.log(e)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

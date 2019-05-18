@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+       
+    </div>
+
+    <script>
+        Vue.component('Test', {
+            data() {
+                return {
+                    value: ''
+                }
+            },
+            template: `
+            <div>
+                <input v-foucs />
+                <input style="background:red" v-model="value" />
+            </div>
+            `,
+
+        })
+
+        // 全局指令在每个组件内都能使用
+        Vue.directive('foucs', {
+            // 当指令和元素绑定关系时触发
+            // 在这里不能执行行为的dom操作
+            bind(el) {
+                /**
+                 * 1. el 指令绑定的元素对象
+                 * 2. binding 指令的精华
+                 */
+            },
+            //  当指令所在的元素被插入到dom时运行
+            inserted(el) {
+                // el.focus()
+            },
+            update(el) {
+                // update钩子在指令所在的虚拟dom 组件内，组件内部的数据发生改变后就会触发
+                console.log('更新了')
+            },
+            componentUpdated() {
+                // 当前指令所在的组件Vnode/子组件的vnode 发生改变后触发
+            },
+            unbind() {
+                // 指令所在的元素被销毁掉了
+            }
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+            },
+            // 自定义局部指令
+            // 只在当前这个组件 或者实例中生效
+            directives: {
+                cc: {
+                    // 当指令和元素绑定关系时触发
+                    // 在这里不能执行行为的dom操作
+                    bind(el) {
+                        
+                    },
+                    //  当指令所在的元素被插入到dom时运行
+                    inserted(el) {
+                        // el.focus()
+                    },
+                    update(el) {
+                        // update钩子在指令所在的虚拟dom 组件内，组件内部的数据发生改变后就会触发
+                        console.log('更新了')
+                    },
+                    componentUpdated() {
+                        // 当前指令所在的组件Vnode/子组件的vnode 发生改变后触发
+                    },
+                    unbind() {
+                        // 指令所在的元素被销毁掉了
+                    }
+                }
+            },
+            template: `
+            <Test />
+            `
+        })
+    </script>
+</body>
+</html>

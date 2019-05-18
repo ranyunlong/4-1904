@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap/dist/css/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input v-model="value" style="background: #ccc" />
+    </div>
+
+    <script>
+        Vue.directive('sync', {
+            bind(el, binding, vnode) {
+                console.log(vnode)
+                // console.log(el, binding)
+                /**
+                 * binding
+                 *  1. expression  表达式的名称 原始指令上的字符串 v-sync="value1"
+                 *  2. name 指令名称
+                 *  3. rawName 使用的指令名称 加了v-的
+                 *  4. value  expression执行过后的值（计算后值）
+                 */
+
+                /**
+                 * vnode
+                 * 使用了指令之后 它会把当前这个元素 创建成一个虚拟的dom元素
+                 * 里面包含
+                 * 1. context 这个指令绑定的元素 所在的组件对象
+                 * 2. data  指令绑定的数据
+                 * 3. elm 指令所绑定的真实元素
+                 */
+
+                el.value = binding.value
+
+                // 给原生元素绑定事件
+                el.addEventListener('input', (e) => {
+
+                    vnode.context[binding.expression] = e.target.value
+                    // console.log(binding)
+                    // 获取到他的value值
+                    // console.log(e.target.value, vnode)
+                    // vnode.context.value1 = e.target.value
+                })
+            },
+            update(el, binding) {
+                // 当组件VNODE 内部的变量发生改变时 我们可以利用指令的原生元素来操作原生属性
+                el.value = binding.value
+            }
+        })
+
+        Vue.component('Test', {
+            data() {
+                return {
+                    title: 'xxx'
+                }
+            },
+            template:`
+            <div>
+                <input v-sync="title" />
+                {{title}}    
+            </div>
+            `
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+              value: 123
+            },
+            template:`
+            <Test />
+            `
+            // directives: {
+            //     sync: {
+
+            //     }
+            // }
+        })
+    </script>
+</body>
+</html>
