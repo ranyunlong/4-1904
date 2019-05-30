@@ -5,8 +5,19 @@
 </template>
 
 <script>
+    import { getUserList } from '../../api/getUserList'
     export default {
-        
+        beforeCreate() {
+            getUserList({
+                page: 1,
+                limit: 10,
+                sidx: 'userId',
+                order: 'desc',
+                // username: ''
+            }).then(res => {
+                console.log(res)
+            })
+        }
     }
 </script>
 

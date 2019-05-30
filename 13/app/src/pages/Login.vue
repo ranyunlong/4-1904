@@ -47,7 +47,7 @@
             </FormItem>
 
             <FormItem>
-                <Button type="primary" @click="login" long>登陆</Button>
+                <Button :loading="loading" type="primary" @click="login" long>登陆</Button>
             </FormItem>
         </Form>
     </div>
@@ -62,6 +62,7 @@
             return {
                 uid: uuid(),
                 // 表单数据
+                loading: false,
                 form: {
                     username: "",
                     password: "",
@@ -94,26 +95,25 @@
                     // console.log(valid)
                     // 如果valid 为true 表示验证通过
                     // ajax。。。
-                    // login({
-                    //     ...this.form,
-                    //     uuid: this.uid
-                    // }).then(res => {
-                    //     const { code, msg, token } = res.data
-                    //     if (code === 0) {
-                    //         localStorage.setItem('token', token)
-                    //         this.$router.push({
-                    //             path: '/admin/'
-                    //         })
-                    //     } else {
-                    //         this.$Notice.error({
-                    //             title: '提示',
-                    //             desc: msg
-                    //         })
-                    //     }
-                    // })
+                    this.loading = true
 
-                    http.post('/sys/login', {...this.form, uuid: this.uid}).then(res=> {
-
+                    login({
+                        ...this.form,
+                        uuid: this.uid
+                    }).then(res => {
+                        const { code, msg, token } = res.data
+                        this.loading = false
+                        if (code === 0) {
+                            localStorage.setItem('token', token)
+                            this.$router.push({
+                                path: '/sys/'
+                            })
+                        } else {
+                            this.$Notice.error({
+                                title: '提示',
+                                desc: msg
+                            })
+                        }
                     })
                 })
             }

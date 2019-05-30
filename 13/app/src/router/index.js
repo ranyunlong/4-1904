@@ -14,10 +14,10 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            redirect: '/admin'
+            redirect: '/sys'
         },
         {
-            path: '/admin',
+            path: '/sys',
             component: AdminPage,
             meta: {
                 auth_login: true
@@ -32,14 +32,14 @@ const router = new VueRouter({
                     component: AdminWelcomePage
                 },
                 {
-                    path: 'users.html',
+                    path: 'user.html',
                     meta: {
                         auth_login: true
                     },
                     component: AdminUsersPage
                 },
                 {
-                    path: 'roles.html',
+                    path: 'role.html',
                     meta: {
                         auth_login: true
                     },
