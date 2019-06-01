@@ -4,5 +4,5 @@
 import { http } from './http'
 
 export function saveUser(data) {
-    return http.post('/sys/save/user', data)
+    return http.post('/sys/user/save', data)
 }
